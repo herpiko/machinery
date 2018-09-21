@@ -95,7 +95,9 @@ func (t *Task) Call() (taskResults []*TaskResult, err error) {
 	}
 
 	// Invoke the task
-	results := t.TaskFunc.Call(args)
+	latestArgs := []reflect.Value{}
+	latestArgs = append(latestArgs, args[len(args)-1])
+	results := t.TaskFunc.Call(latestArgs)
 
 	// Task must return at least a value
 	if len(results) == 0 {
